@@ -172,3 +172,34 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Virtual environment
+venv/
+.env/
+env/
+option-1/option_1_env/*
+
+# ---- Terraform ----
+# Local .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Sensitive terraform data
+.terraform/
+.terraform.lock.hcl
+
+# Override files (not for version control)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Plan output
+*.tfplan
+
+# ---- VSCode or other IDE metadata (optional) ----
+.vscode/
+.idea/
