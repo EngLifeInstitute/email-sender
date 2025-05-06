@@ -178,6 +178,7 @@ venv/
 .env/
 env/
 option-1/option_1_env/*
+option-2/option_2_env/*
 
 # ---- Terraform ----
 # Local .tfstate files

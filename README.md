@@ -31,4 +31,18 @@
     ```
     python main.py
     ```
-## OPTION 2: Use 
+## OPTION 2: Use smtplib
+ - Follow the instructions of this video: [Reference](https://www.youtube.com/shorts/Tuyai2xNwvE)
+ - Create and activate a python virtual environment (Windows || Inside of ../option-2/):
+    ```
+    python -m venv option_2_env
+    .\option_2_env\Scripts\Activate
+    ```
+ - Install the project dependencies:
+    ```
+    pip install -r requirements.txt
+    ```
+ - Run the script inside of "../option-2/":
+    ```
+    python main.py
+    ```
