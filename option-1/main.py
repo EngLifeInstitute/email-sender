@@ -14,7 +14,7 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 FROM_EMAIL = os.getenv("FROM_EMAIL")  # Your verified sender email
 
 # 1. Generate a random alphanumeric string
-def generate_token(length=6):
+def generate_token(length=16):
     chars = string.ascii_letters + string.digits
     return ''.join(secrets.choice(chars) for _ in range(length))
 
