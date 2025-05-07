@@ -1,24 +1,24 @@
 variable "domain_name" {
-  default = "segfaultlabs.com"
+  default = "example.com"
 }
 
 variable "hosted_zone_id" {
-  default = "Z01859851N1KBJ7U68XQM"
+  default = ""
 }
 
 locals {
   sendgrid_cname_records = [
     {
-      host  = "em9025"
-      value = "u52536322.wl073.sendgrid.net"
+      host  = ""
+      value = ""
     },
     {
-      host  = "s1._domainkey"
-      value = "s1.domainkey.u52536322.wl073.sendgrid.net"
+      host  = ""
+      value = ""
     },
     {
-      host  = "s2._domainkey"
-      value = "s2.domainkey.u52536322.wl073.sendgrid.net"
+      host  = ""
+      value = ""
     }
   ]
 
