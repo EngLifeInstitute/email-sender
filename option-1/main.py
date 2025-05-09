@@ -14,8 +14,8 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 FROM_EMAIL = os.getenv("FROM_EMAIL")  # Your verified sender email
 
 # 1. Generate a random alphanumeric string
-def generate_token(length=16):
-    chars = string.ascii_letters + string.digits
+def generate_token(length=6):
+    chars = string.ascii_letters.upper() #+ string.digits
     return ''.join(secrets.choice(chars) for _ in range(length))
 
 # 2. Send email via SendGrid
@@ -42,16 +42,13 @@ def send_email(to_email, token):
                     border-radius: 8px;
                     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                 }}
-                .greetings {{
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-bottom: 20px;
+                .footer {{
+                    text-align: center;
+                    margin-top: 20px;
                 }}
                 .logo {{
-                    max-width: 10%;  /* Controls the width of the logo */
+                    width: 25%;
                     height: auto;
-                    margin-right: 1px;  /* Space between logo and title */
                 }}
                 .token {{
                     background-color: #007bff;
@@ -63,31 +60,23 @@ def send_email(to_email, token):
                     margin-top: 20px;
                     letter-spacing: 1px;
                 }}
-                .footer {{
-                    margin-top: 20px;
-                    font-size: 12px;
-                    color: #888;
-                    text-align: start;
-                }}
             </style>
         </head>
         <body>
             <div class="container">
-                <div class="greetings">
-                    <img src="https://englifeinstitute.github.io/logo/logo.jpg" alt="Logo" class="logo" />
-                    <h2>Welcome!!</h2>
-                </div>
-                <p>Hello,</p>
-                <p>Here is your token:</p>
-                <div class="token">{token}</div>
-                <p>If you did not request this, please ignore this message.</p>
+                <h2>¡Hola!</h2>
+                <p>Con el siguiente código podrás acceder a un descuento:</p>
+                <p style="text-align: center;">
+                    <span class="token">{token}</span>
+                </p>
+                <p>Recuerda que tienes 24 horas a partir del momento en que recibiste este correo.</p>
                 <div class="footer">
-                    <p>OneNessInstitute</p>
+                    <img src="https://englifeinstitute.github.io/logo/logo.png" alt="Logo" class="logo" />
                 </div>
             </div>
         </body>
         </html>
-        """
+    """
         )
     try:
         sg = SendGridAPIClient(SENDGRID_API_KEY)
@@ -102,7 +91,8 @@ def save_to_excel(email, token):
     current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     # Define the Excel file path
-    file_path = "client_token.xlsx"
+    file_path = "codigo_descuento_clientes.xlsx"
+
     
     # Check if the Excel file exists
     if os.path.exists(file_path):
@@ -135,112 +125,3 @@ if __name__ == "__main__":
     email_input = input("Enter your email: ")
     result = process_email(email_input)
     print("Email sent. Token saved:", result)
-
-# import string
-# import secrets
-# import os
-# from sendgrid import SendGridAPIClient
-# from sendgrid.helpers.mail import Mail
-# from dotenv import load_dotenv
-
-# # Load environment variables from .env file
-# load_dotenv()
-
-# SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-# FROM_EMAIL = os.getenv("FROM_EMAIL")  # Your verified sender email
-
-# # 1. Generate a random alphanumeric string
-# def generate_token(length=16):
-#     chars = string.ascii_letters + string.digits
-#     return ''.join(secrets.choice(chars) for _ in range(length))
-
-# # 2. Send email via SendGrid
-# def send_email(to_email, token):
-#     message = Mail(
-#         from_email=FROM_EMAIL,
-#         to_emails=to_email,
-#         subject='Your verification token',
-#         html_content = f"""
-#         <html>
-#         <head>
-#             <style>
-#                 body {{
-#                     font-family: Arial, sans-serif;
-#                     background-color: #f4f4f4;
-#                     padding: 20px;
-#                     color: #333;
-#                 }}
-#                 .container {{
-#                     max-width: 600px;
-#                     margin: auto;
-#                     background-color: #ffffff;
-#                     padding: 30px;
-#                     border-radius: 8px;
-#                     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-#                 }}
-#                 .greetings {{
-#                     display: flex;
-#                     align-items: center;
-#                     justify-content: center;
-#                     margin-bottom: 20px;
-#                 }}
-#                 .logo {{
-#                     max-width: 10%;  /* Controls the width of the logo */
-#                     height: auto;
-#                     margin-right: 1px;  /* Space between logo and title */
-#                 }}
-#                 .token {{
-#                     background-color: #007bff;
-#                     color: white;
-#                     padding: 10px 15px;
-#                     font-size: 18px;
-#                     border-radius: 5px;
-#                     display: inline-block;
-#                     margin-top: 20px;
-#                     letter-spacing: 1px;
-#                 }}
-#                 .footer {{
-#                     margin-top: 20px;
-#                     font-size: 12px;
-#                     color: #888;
-#                     text-align: start;
-#                 }}
-#             </style>
-#         </head>
-#         <body>
-#             <div class="container">
-#                 <div class="greetings">
-#                     <img src="https://englifeinstitute.github.io/logo/logo.jpg" alt="Logo" class="logo" />
-#                     <h2>Welcome!!</h2>
-#                 </div>
-#                 <p>Hello,</p>
-#                 <p>Here is your token:</p>
-#                 <div class="token">{token}</div>
-#                 <p>If you did not request this, please ignore this message.</p>
-#                 <div class="footer">
-#                     <p>OneNessInstitute</p>
-#                 </div>
-#             </div>
-#         </body>
-#         </html>
-#         """
-#         )
-#     try:
-#         sg = SendGridAPIClient(SENDGRID_API_KEY)
-#         response = sg.send(message)
-#         print(f"Email sent to {to_email}. Status code: {response.status_code}")
-#     except Exception as e:
-#         print("Error sending email:", e)
-
-# # 3. Main function
-# def process_email(email):
-#     token = generate_token()
-#     print(f"Generated token for {email}: {token}")
-#     send_email(email, token)
-#     return {email: token}
-
-# # Example usage
-# if __name__ == "__main__":
-#     email_input = input("Enter your email: ")
-#     result = process_email(email_input)
-#     print("Email sent. Token saved:", result)
