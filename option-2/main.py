@@ -10,11 +10,11 @@ from datetime import datetime
 
 load_dotenv()
 
-EXCEL_FILE = "client_token.xlsx"
+EXCEL_FILE = "codigo_descuento_clientes.xlsx"
 
 # 1. Generate a random alphanumeric string
-def generate_token(length=16):
-    chars = string.ascii_letters + string.digits
+def generate_token(length=6):
+    chars = string.ascii_letters.upper() #+ string.digits
     return ''.join(secrets.choice(chars) for _ in range(length))
 
 # 2. Send email
@@ -24,73 +24,62 @@ def send_email(to_email, token):
 
     # Create HTML message
     html_content = f"""
-    <html>
-    <head>
-        <style>
-            body {{
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                padding: 20px;
-                color: #333;
-            }}
-            .container {{
-                max-width: 600px;
-                margin: auto;
-                background-color: #ffffff;
-                padding: 30px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }}
-            .greetings {{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-bottom: 20px;
-            }}
-            .logo {{
-                max-width: 10%;  /* Controls the width of the logo */
-                height: auto;
-                margin-right: 1px;  /* Space between logo and title */
-            }}
-            .token {{
-                background-color: #007bff;
-                color: white;
-                padding: 10px 15px;
-                font-size: 18px;
-                border-radius: 5px;
-                display: inline-block;
-                margin-top: 20px;
-                letter-spacing: 1px;
-            }}
-            .footer {{
-                margin-top: 20px;
-                font-size: 12px;
-                color: #888;
-                text-align: start;
-            }}
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="greetings">
-                <img src="https://englifeinstitute.github.io/logo/logo.jpg" alt="Logo" class="logo" />
-                <h2>Welcome!!</h2>
+        <html>
+        <head>
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    padding: 20px;
+                    color: #333;
+                }}
+                .container {{
+                    max-width: 600px;
+                    margin: auto;
+                    background-color: #ffffff;
+                    padding: 30px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }}
+                .footer {{
+                    text-align: center;
+                    margin-top: 20px;
+                }}
+                .logo {{
+                    width: 25%;
+                    height: auto;
+                }}
+                .token {{
+                    background-color: #007bff;
+                    color: white;
+                    padding: 10px 15px;
+                    font-size: 18px;
+                    border-radius: 5px;
+                    display: inline-block;
+                    margin-top: 20px;
+                    letter-spacing: 1px;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h2>¡Hola!</h2>
+                <p>Con el siguiente código podrás acceder a un descuento:</p>
+                <p style="text-align: center;">
+                    <span class="token">{token}</span>
+                </p>
+                <p>Recuerda que tienes 24 horas a partir del momento en que recibiste este correo.</p>
+                <div class="footer">
+                    <img src="https://englifeinstitute.github.io/logo/logo.png" alt="Logo" class="logo" />
+                </div>
             </div>
-            <p>Hello,</p>
-            <p>Here is your token:</p>
-            <div class="token">{token}</div>
-            <p>If you did not request this, please ignore this message.</p>
-            <div class="footer">
-                <p>OneNessInstitute</p>
-            </div>
-        </div>
-    </body>
-    </html>
+        </body>
+        </html>
     """
 
     # MIME setup
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = "Your Verification Token"
+    msg["Subject"] = "Tu código de descuento"
     msg["From"] = from_email
     msg["To"] = to_email
 
